@@ -40,8 +40,13 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.groupBoxMessage = new System.Windows.Forms.GroupBox();
+            this.textBoxmessageId = new System.Windows.Forms.TextBox();
+            this.labelmessageId = new System.Windows.Forms.Label();
+            this.buttonSendMessage = new System.Windows.Forms.Button();
             this.groupBoxchannelParameters.SuspendLayout();
             this.groupBoxconnectionOptions.SuspendLayout();
+            this.groupBoxMessage.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonCanalOpen
@@ -129,13 +134,15 @@
             // 
             // groupBoxconnectionOptions
             // 
+            this.groupBoxconnectionOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxconnectionOptions.Controls.Add(this.checkBox4);
             this.groupBoxconnectionOptions.Controls.Add(this.checkBox3);
             this.groupBoxconnectionOptions.Controls.Add(this.checkBox2);
             this.groupBoxconnectionOptions.Controls.Add(this.checkBox1);
-            this.groupBoxconnectionOptions.Location = new System.Drawing.Point(21, 19);
+            this.groupBoxconnectionOptions.Location = new System.Drawing.Point(6, 19);
             this.groupBoxconnectionOptions.Name = "groupBoxconnectionOptions";
-            this.groupBoxconnectionOptions.Size = new System.Drawing.Size(242, 120);
+            this.groupBoxconnectionOptions.Size = new System.Drawing.Size(277, 120);
             this.groupBoxconnectionOptions.TabIndex = 3;
             this.groupBoxconnectionOptions.TabStop = false;
             this.groupBoxconnectionOptions.Text = "Connection Options";
@@ -180,11 +187,53 @@
             this.checkBox1.Text = "Enable Status Message";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // groupBoxMessage
+            // 
+            this.groupBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxMessage.Controls.Add(this.buttonSendMessage);
+            this.groupBoxMessage.Controls.Add(this.labelmessageId);
+            this.groupBoxMessage.Controls.Add(this.textBoxmessageId);
+            this.groupBoxMessage.Location = new System.Drawing.Point(307, 12);
+            this.groupBoxMessage.Name = "groupBoxMessage";
+            this.groupBoxMessage.Size = new System.Drawing.Size(345, 305);
+            this.groupBoxMessage.TabIndex = 3;
+            this.groupBoxMessage.TabStop = false;
+            this.groupBoxMessage.Text = "groupBox1";
+            // 
+            // textBoxmessageId
+            // 
+            this.textBoxmessageId.Location = new System.Drawing.Point(106, 31);
+            this.textBoxmessageId.Name = "textBoxmessageId";
+            this.textBoxmessageId.Size = new System.Drawing.Size(100, 20);
+            this.textBoxmessageId.TabIndex = 5;
+            this.textBoxmessageId.Text = "0x0";
+            // 
+            // labelmessageId
+            // 
+            this.labelmessageId.AutoSize = true;
+            this.labelmessageId.Location = new System.Drawing.Point(23, 34);
+            this.labelmessageId.Name = "labelmessageId";
+            this.labelmessageId.Size = new System.Drawing.Size(67, 13);
+            this.labelmessageId.TabIndex = 7;
+            this.labelmessageId.Text = "Message ID:";
+            // 
+            // buttonSendMessage
+            // 
+            this.buttonSendMessage.Location = new System.Drawing.Point(26, 175);
+            this.buttonSendMessage.Name = "buttonSendMessage";
+            this.buttonSendMessage.Size = new System.Drawing.Size(75, 23);
+            this.buttonSendMessage.TabIndex = 8;
+            this.buttonSendMessage.Text = "Send Message";
+            this.buttonSendMessage.UseVisualStyleBackColor = true;
+            this.buttonSendMessage.Click += new System.EventHandler(this.buttonSendMessage_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(664, 450);
+            this.Controls.Add(this.groupBoxMessage);
             this.Controls.Add(this.groupBoxchannelParameters);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -192,6 +241,8 @@
             this.groupBoxchannelParameters.PerformLayout();
             this.groupBoxconnectionOptions.ResumeLayout(false);
             this.groupBoxconnectionOptions.PerformLayout();
+            this.groupBoxMessage.ResumeLayout(false);
+            this.groupBoxMessage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -210,6 +261,10 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.GroupBox groupBoxMessage;
+        private System.Windows.Forms.Label labelmessageId;
+        private System.Windows.Forms.TextBox textBoxmessageId;
+        private System.Windows.Forms.Button buttonSendMessage;
     }
 }
 

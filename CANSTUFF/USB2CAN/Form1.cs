@@ -79,6 +79,20 @@ namespace USB2CAN
                 {  9  ,  "10"     },      //  10 Kbit			
 
             };
+
+
+
+            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            struct structCanalMsg
+            {
+                public uint flags;
+                public uint obid;
+                public uint id;
+                public Byte sizeData;
+                public Byte[] data;
+                public uint timestamp;
+            }
+
             #endregion
 
             #region Methods
@@ -88,6 +102,9 @@ namespace USB2CAN
             public static extern long CanalOpen(string pConfigStr, long flags);
             [DllImport(@"C:\\Users\\huqui\\Documents\\Personal\\CANSTUFF\\USB2CAN\\usb2can.dll")]
             public static extern int CanalClose(long handle);
+
+            [DllImport(@"C:\\Users\\huqui\\Documents\\Personal\\CANSTUFF\\USB2CAN\\usb2can.dll")]
+            public static extern int CanalBlockingSend(uint handle, ref structCanalMsg x, uint timeout);
             #endregion
 
             #region DLL Function Wrappers
@@ -183,6 +200,9 @@ namespace USB2CAN
             SerialNumber = textBoxSerialNumber.Text;
         }
 
+        private void buttonSendMessage_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
