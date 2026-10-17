@@ -118,17 +118,15 @@ device always has somewhere to put data.
 `stuff error rx=1 tx=0`, then with automatic retransmission `warning rx=99`, then `error passive rx=127`
 within 0.5 s. The transmit counter stayed 0.
 
-## Firmware behaviours to design around
+## Protocol quirks
 
-- Under sustained load the firmware is unreliable. Near ~9,000 frames/s it can permanently stop sending
-  on EP `0x81`. At 6,000 frames/s it silently dropped 1 frame in 30,000 and once hung completely (every
-  pipe fails with `ERROR_GEN_FAILURE`). Both lockups need a replug. See FINDINGS.
-- Standard and extended frames queued together can be transmitted out of order relative to each other
-  (a standard frame overtakes a waiting extended one). Same-type frames keep their order.
-- Mixed standard/extended traffic: occasional silent loss of standard frames, and a fault where every
-  standard frame is delivered with the extended flag (`0x01`) set until CLOSE + OPEN. Not seen with
-  standard-only traffic.
 - `CLEAR_FEATURE(ENDPOINT_HALT)` (WinUSB `ResetPipe`) doesn't reset the firmware's data toggle, so the
-  next packet on that pipe is lost.
-- Each transmitted frame is followed by a 25–65 µs firmware gap, capping throughput at ~9,000 frames/s
-  regardless of bitrate.
+  next packet on that pipe is lost. Don't reset pipes.
+- RESET (command 1) reboots the MCU without USB re-enumeration; CLOSE discards frames still waiting to be
+  sent (see the command table).
+- A standard frame can overtake an extended frame that is still waiting to be sent; same-type frames
+  keep their order.
+
+The firmware's reliability limits under load (receive stall, complete hang, frame loss, standard frames
+flagged as extended) are summarised in the README's Limitations, with the evidence in
+[FINDINGS.md](FINDINGS.md#4-firmware-reliability).

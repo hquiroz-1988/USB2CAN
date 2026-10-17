@@ -141,10 +141,11 @@ usb2can/            the driver (device.py: protocol and API, winusb.py: WinUSB c
 tools/              selftest.py, dump_descriptors.py
 docs/PROTOCOL.md    USB protocol reference
 docs/FINDINGS.md    investigation, measurements, experiment log
+docs/VENDOR.md      every vendor download: URL, hash, what it is, worth keeping or not
 vendor/             third-party downloads (local only, not in git)
 ```
 
 `vendor/` isn't committed: it's material from 8devices, STMicroelectronics and the Linux kernel
-(`usb_8dev.c` is GPL-2.0), about 25 MB. To recreate it, download the files linked from
-<https://wiki.8devices.com/usb2can> (each one is listed in [docs/FINDINGS.md](docs/FINDINGS.md#1-vendor-windows-stack))
+(`usb_8dev.c` is GPL-2.0), about 16 MB of downloads. To recreate it, download the files linked from
+<https://wiki.8devices.com/usb2can> (each one is listed in [docs/VENDOR.md](docs/VENDOR.md), with what it's good for)
 and `drivers/net/can/usb/usb_8dev.c` from the Linux kernel.

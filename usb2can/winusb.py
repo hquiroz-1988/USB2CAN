@@ -35,14 +35,12 @@ INVALID_HANDLE_VALUE = wt.HANDLE(-1).value
 
 ERROR_ACCESS_DENIED = 5
 ERROR_SEM_TIMEOUT = 121
-ERROR_OPERATION_ABORTED = 995
 ERROR_IO_PENDING = 997
 STATUS_PENDING = 0x103
 CR_SUCCESS = 0
 CR_BUFFER_SMALL = 0x1A
 
 # WinUsb_SetPipePolicy policy types
-AUTO_CLEAR_STALL = 0x02        # UCHAR
 PIPE_TRANSFER_TIMEOUT = 0x03   # ULONG, milliseconds, 0 = never
 RAW_IO = 0x07                  # UCHAR
 
@@ -77,7 +75,6 @@ WinUsb_WritePipe = _proto(_wu.WinUsb_WritePipe, wt.BOOL, ctypes.c_void_p, ctypes
 WinUsb_GetOverlappedResult = _proto(_wu.WinUsb_GetOverlappedResult, wt.BOOL, ctypes.c_void_p,
                                     _LPOV, ctypes.POINTER(wt.DWORD), wt.BOOL)
 WinUsb_AbortPipe = _proto(_wu.WinUsb_AbortPipe, wt.BOOL, ctypes.c_void_p, ctypes.c_ubyte)
-WinUsb_ResetPipe = _proto(_wu.WinUsb_ResetPipe, wt.BOOL, ctypes.c_void_p, ctypes.c_ubyte)
 
 
 def _error(what, code=None):
@@ -150,11 +147,6 @@ class WinUsbDevice:
 
     def abort(self, pipe):
         WinUsb_AbortPipe(self.handle, pipe)
-
-    def reset_pipe(self, pipe):
-        """Clear a halt on the device's endpoint and reset its data toggle."""
-        if not WinUsb_ResetPipe(self.handle, pipe):
-            raise _error(f"reset pipe 0x{pipe:02x}")
 
     def close(self):
         if self.handle:

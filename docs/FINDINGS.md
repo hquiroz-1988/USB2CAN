@@ -21,23 +21,13 @@ Device: serial ED000200, firmware 1.7, hardware 1.0. Host: Python 3.12.3 64-bit,
 
 ## 1. Vendor Windows stack
 
-All downloads from <https://wiki.8devices.com/usb2can> are in `vendor/downloads/`, each archive extracted
-into its own folder in `vendor/extracted/`. That folder exists only locally; it isn't in git.
+Every file 8devices publishes for the device is inventoried in [VENDOR.md](VENDOR.md), with download
+URLs, sizes, hashes, what each one is, and the analysis of the vendor driver and DLL. In short:
 
-| Item | Finding |
-|---|---|
-| Windows drivers v1.0.2.1 (win32, win64) | KMDF 1.9 drivers with the WDF 1.9 co-installer. The catalogs are signed by 8devices with a VeriSign certificate valid 2011-07-06 to 2012-07-06; the `.sys` files themselves are unsigned. |
-| Win64 driver v1.0.2.1, 2017-02-20 package | Same driver, but the `.sys` and `.cat` are signed by *Microsoft Windows Hardware Compatibility Publisher* (attestation-signed), so Windows 11 would accept the signature. |
-| Driver build | The PDB path is `c:\works\8devices\usb2can\usbsamp\sys\...\objfre_win7_amd64\...`: Microsoft's WDK 7 **usbsamp** sample, built for Win7. The INF also turns on KMDF verifier settings (`VerifierOn`, `DbgBreakOnError`). |
-| Memory Integrity (HVCI) | Every driver build has an `INIT` section that is both **writable and executable**. Memory Integrity refuses to load such drivers, and it's on on this PC (`SecurityServicesRunning = 2`). We didn't install the driver to confirm; this is static analysis. |
-| CANAL DLL v1.0.6 (`usb2can.dll`) | **32-bit only** (PE32). It finds the device through SetupAPI and talks to the vendor kernel driver with `DeviceIoControl`, so it can't work over WinUSB. The API is documented in `CANAL_API.pdf`. |
-| Test application v1.0 | 32-bit MFC app built on the CANAL DLL; its source is included. |
-| DfuSe Demo v2.2 | Intact. Includes ST's `STTub30` DFU driver (signed 2009). |
-| DfuSe Demo v3.0.3 | **Truncated on 8devices' server**: two downloads gave identical files (md5 `224a92846fa841a7a7c27a12b6ced17d`) with no zip directory. |
-| `dfu-util` | A Linux x86-64 ELF binary (modified by 8devices for this device), so it doesn't run on Windows. |
-| Firmware images | `usb2can_1_5/1_6/1_7.dfu`. The device already runs 1.7, the latest. |
-| Serial-number images | DFU EEPROM images for ED000100–ED000226. Every unit ships as ED000200, so several units on one PC need unique serials. |
-| Documentation | User guide, datasheet, schematic and CANAL API PDFs. Hardware facts are collected in [PROTOCOL.md](PROTOCOL.md#device). |
+- The kernel driver is a WDK 7 **usbsamp** build with a writable and executable `INIT` section, which
+  Memory Integrity refuses to load. Memory Integrity is on on this PC.
+- The CANAL DLL is **32-bit only** and talks to that kernel driver, so it can't work over WinUSB.
+- Nothing from the vendor is needed to use this driver.
 
 Before WinUSB was attached, Windows showed the device with problem code 28 (no driver installed).
 
