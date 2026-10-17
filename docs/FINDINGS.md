@@ -43,9 +43,9 @@ Before WinUSB was attached, Windows showed the device with problem code 28 (no d
 
 ### The earlier C# attempt (2020)
 
-The repository's original WinForms app (`USB2CAN/`, C# / .NET Framework 4.7.2) called the CANAL DLL
-through P/Invoke. Apart from the kernel driver being blocked on current Windows, it had three problems
-of its own:
+The repository's first version (2020, still in git history before the WinUSB driver replaced it) was a
+WinForms app (`USB2CAN/`, C# / .NET Framework 4.7.2) that called the CANAL DLL through P/Invoke. Apart
+from the kernel driver being blocked on current Windows, it had three problems of its own:
 
 - The Debug build targets **x64**, and a 64-bit process can't load the 32-bit `usb2can.dll`
   (`BadImageFormatException`).
